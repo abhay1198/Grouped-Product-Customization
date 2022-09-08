@@ -14,7 +14,22 @@
                 <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Module Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>default configuration should be YES to work all the module functionality.</comment>
                 </field>
+                <group id="child_product" translate="label" showInDefault="1" sortOrder="5" showInWebsite="1" showInStore="1">
+                    <label>Grouped Product Frontend Options</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                    <field id="sku" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable Child Product SKU</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="salable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable Child Product Salable Quantity</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                </group>
             </group>
         </section>
     </system>
