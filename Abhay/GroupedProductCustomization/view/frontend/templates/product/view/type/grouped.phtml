@@ -15,6 +15,10 @@
 <?php $_product = $block->getProduct(); ?>
 <?php $_associatedProducts = $block->getAssociatedProducts(); ?>
 <?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
+<?php 
+$helper = $this->helper('Abhay\GroupedProductCustomization\Helper\Data');
+$blockObj= $block->getLayout()->createBlock('Abhay\GroupedProductCustomization\Block\Product\View\Type\Grouped');
+?>
 
 <div class="table-wrapper grouped">
     <table class="table data grouped"
@@ -40,10 +44,29 @@
                         <?php if ($block->getCanShowProductPrice($_item)) : ?>
                             <?= /* @noEscape */ $block->getProductPrice($_item) ?>
                         <?php endif; ?>
-                        <?php
-                            $sku=$_item->getSku();
-                            echo "<b>SKU:</b>" .$sku; 
-                        ?>
+                        <?php if ($helper->isModuleEnabled()) : ?>
+                            <?php 
+                                if ($helper->isChildProductSkuEnabled()) : 
+                                    $sku=$_item->getSku();
+                                    echo "<b>SKU:</b>" .$sku; 
+                                ?>
+                            <?php  endif; ?>
+                            <?php    
+                                if ($helper->isChildProductSalableQtyEnabled()) : 
+                                    $sku=$_item->getSku();
+                                    $product=$blockObj->getSaleble($sku);
+                                    $pqty=0;
+                                    $product = is_array($product) ? $product : array();
+                                    foreach ($product as $qty) {
+                                        if($qty['qty']){
+                                            $pqty=$qty['qty'];
+                                        }
+                                    }
+                                    echo "<br/><b>Now Left only: </b>" .$pqty;
+                                ?>
+                            <?php  endif; ?>
+                        <?php  endif; ?>
+
                         <?php endif; ?>
                 </td>
                 <?php if ($_product->isSaleable()) : ?>
